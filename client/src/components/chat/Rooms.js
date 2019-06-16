@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import io from 'socket.io-client';
+import openSocket from 'socket.io-client';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
@@ -22,7 +22,8 @@ class Rooms extends Component {
   }
 
   initSocket = () => {
-    const socket = io('http://127.0.0.1:5002', {
+    const { user } = this.props.auth;
+    const socket = openSocket('http://127.0.0.1:5002', {
   transports: ['websocket'], jsonp: false });
   socket.connect();
   socket.on('connect', () => {
@@ -36,22 +37,25 @@ class Rooms extends Component {
   });
   }
 
-  componentDidMount(){
-    axios.get('http://localhost:5002/chat/rooms')
+  componentWillMount(){
+    const { user } = this.props.auth;
+    axios.get('/api/chat/rooms')
       .then((res)=>{
         // console.log('these are the rooms', res);
         this.setState({rooms: res.data});
       }).catch((err)=>{
         console.log(err);
       })
+      console.log('this should be the user', user.id);
   }
 
 
 
 
   onSubmit(e) {
+    const { user } = this.props.auth;
    e.preventDefault();
-       this.state.socket.emit('createRoom', this.state.roomTitle, this.props.user._id);
+       this.state.socket.emit('createRoom', this.state.roomTitle, user.id);
        // this.setState({rooms: [...this.state.rooms, ]})
    }
 
@@ -74,7 +78,7 @@ onDeleteClick(id){
 
 
   render() {
-    const {userId} = this.props;
+    const { user } = this.props.auth;
     const  roomTitles = this.state.rooms.map((room => {
       return(
       <div>
@@ -87,7 +91,7 @@ onDeleteClick(id){
          <div class="card-action  grey-text grey lighten-4">
             <Link to={`/chat/${room._id}`} class="grey-text">link</Link>
               { //Check if message failed
-          (this.props.user._id === room.admin)
+          (user.id === room.admin)
             ?<button
                 onClick={this.onDeleteClick.bind(this, room._id)}
                 type="button"
@@ -125,7 +129,7 @@ onDeleteClick(id){
 const mapStateToProps = state => {
   // console.log('this is mstp', state);
   return{
-    user:state.auth.user
+    auth:state.auth
   };
 };
 

@@ -61,7 +61,7 @@ exports = module.exports = function(io) {
       }else{
         Room.create({
           title: userId
-        }, function(err, newRoom, socket){
+        }, function(err, newRoom){
          socket.join(newRoom.id);
          console.log('new notifaction room created');
        });

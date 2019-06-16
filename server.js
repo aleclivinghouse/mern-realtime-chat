@@ -7,7 +7,7 @@ const users = require("./routes/api/users");
 const chat = require("./routes/api/users");
 const cors = require('cors');
 const app = express();
-socketEvents = require('./socketEvents');
+
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
@@ -16,6 +16,7 @@ app.use(
 );
 app.use(bodyParser.json());
 
+socketEvents = require('./socketEvents');
 // DB Config
 const db = require("./config/keys").mongoURI;
 

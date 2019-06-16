@@ -17,15 +17,15 @@ class Notifications extends Component {
   }
 
   initSocket = () =>{
-    this.props.getCurrentUser();
+    const { user } = this.props.auth;
     const socket = io('http://127.0.0.1:5002', {
     transports: ['websocket'], jsonp: false });
     socket.connect();
     socket.on('connect', ()=>{
       this.setState({socket: socket});
-      this.state.socket.emit('joinYourNotificationRoom', this.props.user._id);
+      this.state.socket.emit('joinYourNotificationRoom', user.id);
       this.state.socket.on('addNotification', (notification)=>{
-        if(notification.text.includes(this.props.user.username)===false){
+        if(notification.text.includes(user.username)===false){
         console.log('this is the notification received', notification);
         this.props.notificationToServer(notification);
        }
@@ -34,7 +34,8 @@ class Notifications extends Component {
   }
 
   componentWillMount(){
-    this.props.getNotifications(this.props.user._id);
+    const { user } = this.props.auth;
+    this.props.getNotifications(user.id);
   }
 
 
@@ -55,7 +56,7 @@ class Notifications extends Component {
 
 const mapStateToProps = state => {
   return{
-    user: state.auth.user,
+    auth:state.auth,
     notifications: state.notifications.notifications
   };
 };

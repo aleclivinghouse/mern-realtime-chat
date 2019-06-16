@@ -41,14 +41,15 @@ class ChatRoom extends Component {
   }
 
   initSocket = () => {
+    const { user } = this.props.auth;
     const socket = io('http://127.0.0.1:5002', {
   transports: ['websocket'], jsonp: false });
   socket.connect();
   socket.on('connect', () => {
     this.setState({socket: socket});
-    console.log('this is the user after connecting to the socket', this.props.user._id);
+    console.log('this is the user after connecting to the socket', user.id);
 
-    this.state.socket.emit('join', this.state.id, this.props.user._id);
+    this.state.socket.emit('join', this.state.id, user.id);
     this.state.socket.on('updateUsersList', (users)=> {
       console.log('update user list fired');
       this.setState({users: users})
@@ -93,7 +94,7 @@ for(let user of theUsers){
     notification.recipient = user._id;
     notification.text = notificationText;
     console.log('join notification about to be submitted');
-  this.state.socket.emit('sendNotification', user._id, notification);
+  this.state.socket.emit('sendNotification', user.id, notification);
   }
 }
 
@@ -176,7 +177,7 @@ const styles = {
 
 const mapStateToProps = state => {
   return{
-    user: state.auth.user,
+    auth:state.auth,
     currentRoom: state.room.currentRoom
   };
 };
