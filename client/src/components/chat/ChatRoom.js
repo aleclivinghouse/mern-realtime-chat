@@ -89,20 +89,20 @@ console.log('these are the users in the application', this.state.users);
 let theUsers = [].concat.apply([], this.state.users);
 console.log('theUsers', theUsers);
 
-for(let user of this.state.users){
+for(let user of theUsers){
   console.log('this is one of the users', user);
   if(user._id !== userObj._id){
     let notification = {};
-    let notificationText = userObj.username + " sent a message in room " + this.props.currentRoom.title;
+    let notificationText = userObj.name + " sent a message in room " + this.props.currentRoom.title;
     notification.recipient = user._id;
     notification.text = notificationText;
     console.log('join notification about to be submitted');
-  this.state.socket.emit('sendNotification', user.id, notification);
+  this.state.socket.emit('sendNotification', user._id, notification);
   }
 }
 
  this.setState({messages: [...this.state.messages, messageObjS]});
- axios.post('http://localhost:5002/chat/messages', messageObj)
+ axios.post('http://localhost:5002/api/chat/messages', messageObj)
    .then((res)=>{
      console.log(res);
    }).catch((err)=>{
