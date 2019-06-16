@@ -25,7 +25,7 @@ class Notifications extends Component {
       this.setState({socket: socket});
       this.state.socket.emit('joinYourNotificationRoom', user.id);
       this.state.socket.on('addNotification', (notification)=>{
-        if(notification.text.includes(user.username)===false){
+        if(notification.text.includes(user.name)===false){
         console.log('this is the notification received', notification);
         this.props.notificationToServer(notification);
        }

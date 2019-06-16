@@ -55,7 +55,7 @@ class ChatRoom extends Component {
       this.setState({users: users})
     });
     this.state.socket.on('addMessage', (message)=>{
-    //   //create a message object with user information
+      console.log('add message is firing');
       this.setState({messages: [...this.state.messages, message]})
     });
   });
@@ -75,7 +75,7 @@ onSubmit(e){
  messageObjS.user = user;
  messageObjS.text = this.state.message;
  messageObjS.room = this.state.id;
-
+ console.log('this is messageObjS', messageObjS);
  //goes to the db
  messageObj.user = user.id;
  messageObj.text = this.state.message;
