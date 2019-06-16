@@ -11,6 +11,7 @@ class NotificationContainer extends React.Component{
     this.props.deleteNotification(id);
   }
   render(){
+    console.log('this is the notification', this.props.notification);
     let theId = this.props.notification._id;
     console.log('these are the props in the niftification room', this.props);
     return(

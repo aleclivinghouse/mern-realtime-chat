@@ -93,11 +93,11 @@ for(let user of theUsers){
   console.log('this is one of the users', user);
   if(user._id !== userObj._id){
     let notification = {};
-    let notificationText = userObj.name + " sent a message in room " + this.props.currentRoom.title;
+    let notificationText = user.name + " sent a message in room " + this.props.currentRoom.title;
     notification.recipient = user._id;
     notification.text = notificationText;
-    console.log('join notification about to be submitted');
-  this.state.socket.emit('sendNotification', user._id, notification);
+    console.log('join notification about to be submitted', user._id);
+    this.state.socket.emit('sendNotification', user._id, notification);
   }
 }
 
