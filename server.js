@@ -7,7 +7,7 @@ const users = require("./routes/api/users");
 const chat = require("./routes/api/users");
 const cors = require('cors');
 const app = express();
-
+socketEvents = require('./socketEvents');
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
@@ -51,7 +51,7 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 app.use("/api/chat", chat);
-const port = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5002;
 const server = app.listen(PORT);
 const io = require('socket.io').listen(server);
 socketEvents(io);

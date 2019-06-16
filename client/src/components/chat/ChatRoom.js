@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
-import { GiftedChat } from "react-web-gifted-chat";
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router';
 import MessageContainer from './MessageContainer';
-import {getCurrentUser, notificationToServer, getCurrentRoom} from '../../actions';
+import { notificationToServer, getCurrentRoom} from '../../actions';
 import { connect } from 'react-redux';
-import Notifications from './notifications';
+import Notifications from './Notifications';
 
 
 //5002
@@ -37,7 +36,6 @@ class ChatRoom extends Component {
       }).catch((err)=>{
         console.log(err);
       })
-     this.props.getCurrentUser();
      console.log('this is the roomId', this.state.id);
      this.props.getCurrentRoom(this.state.id);
   }
@@ -183,4 +181,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {getCurrentUser, notificationToServer, getCurrentRoom})(ChatRoom);
+export default connect(mapStateToProps, { notificationToServer, getCurrentRoom})(ChatRoom);

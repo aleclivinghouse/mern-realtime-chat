@@ -3,9 +3,8 @@ import io from 'socket.io-client';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import {getCurrentUser, deleteRoom} from '../actions';
-import OtherUsers from './OtherUsers';
-import Notifications from './notifications';
+import {deleteRoom} from '../../actions';
+import Notifications from './Notifications';
 
 const socketURL="http://localhost:3000";
 class Rooms extends Component {
@@ -45,8 +44,6 @@ class Rooms extends Component {
       }).catch((err)=>{
         console.log(err);
       })
-
-      this.props.getCurrentUser();
   }
 
 
@@ -132,4 +129,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {getCurrentUser, deleteRoom})(Rooms);
+export default connect(mapStateToProps, { deleteRoom})(Rooms);
