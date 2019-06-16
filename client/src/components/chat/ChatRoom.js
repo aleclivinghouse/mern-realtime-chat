@@ -63,20 +63,21 @@ class ChatRoom extends Component {
 
 
 onSubmit(e){
+    const { user } = this.props.auth;
  e.preventDefault();
  let messageObj = {};
  let messageObjS = {};
  let userObj = {};
  userObj.picture = this.props.user.picture;
  userObj.username = this.props.user.username;
- userObj.id = this.props.user._id;
+ userObj.id = user.id
  //goes to local state
  messageObjS.user = this.props.user;
  messageObjS.text = this.state.message;
  messageObjS.room = this.state.id;
 
  //goes to the db
- messageObj.user = this.props.user._id;
+ messageObj.user = user.id;
  messageObj.text = this.state.message;
  messageObj.room = this.state.id;
  this.state.socket.emit('newMessage', this.state.id, messageObjS);
