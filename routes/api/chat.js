@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const  Room = require('../models/Room');
-const  Message = require('../models/Message');
-const  Notification = require('../models/Notification');
+const  Room = require('../../models/Room');
+const  Message = require('../../models/Message');
+const  Notification = require('../../models/Notification');
 
 router.get('/rooms', (req, res)=>{
   Room.find()

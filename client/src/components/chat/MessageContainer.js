@@ -13,7 +13,7 @@ class MessageContainer extends React.Component{
           <div class="card-panel grey lighten-5">
             <div class="row valign-wrapper">
               <div class="col s2">
-                   <img src={'https://' + this.props.message.user.picture.toString()} height="80px"/>
+                   <img src={this.props.message.user.picture} height="80px"/>
                   <p>{this.props.message.user.username}</p>
               </div>
               <h4 class="col s10 text-center offset-l3">

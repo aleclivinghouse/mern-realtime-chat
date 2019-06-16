@@ -68,11 +68,11 @@ onSubmit(e){
  let messageObj = {};
  let messageObjS = {};
  let userObj = {};
- userObj.picture = this.props.user.picture;
- userObj.username = this.props.user.username;
+ userObj.picture = user.picture;
+ userObj.username = user.username;
  userObj.id = user.id
  //goes to local state
- messageObjS.user = this.props.user;
+ messageObjS.user = user;
  messageObjS.text = this.state.message;
  messageObjS.room = this.state.id;
 
@@ -179,7 +179,7 @@ const styles = {
 const mapStateToProps = state => {
   return{
     auth:state.auth,
-    currentRoom: state.room.currentRoom
+    currentRoom: state.rooms.currentRoom
   };
 };
 

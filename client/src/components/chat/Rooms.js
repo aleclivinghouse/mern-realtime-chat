@@ -37,11 +37,11 @@ class Rooms extends Component {
   });
   }
 
-  componentWillMount(){
+  componentDidMount(){
     const { user } = this.props.auth;
     axios.get('/api/chat/rooms')
       .then((res)=>{
-        // console.log('these are the rooms', res);
+        console.log('these are the rooms', res);
         this.setState({rooms: res.data});
       }).catch((err)=>{
         console.log(err);
