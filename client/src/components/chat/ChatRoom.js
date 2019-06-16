@@ -29,7 +29,7 @@ class ChatRoom extends Component {
   }
 
   componentWillMount(){
-    axios.get(`http://localhost:5002/chat/messages/${this.state.id}`)
+    axios.get(`http://localhost:5002/api/chat/messages/${this.state.id}`)
       .then((res)=>{
          console.log('these is the response with users', res);
         this.setState({messages: res.data});
@@ -52,7 +52,9 @@ class ChatRoom extends Component {
     this.state.socket.emit('join', this.state.id, user.id);
     this.state.socket.on('updateUsersList', (users)=> {
       console.log('update user list fired');
-      this.setState({users: users})
+      this.setState({users: users}, () => {
+        console.log('these are the users after set state', this.state.users);
+      })
     });
     this.state.socket.on('addMessage', (message)=>{
       console.log('add message is firing');
@@ -87,7 +89,7 @@ console.log('these are the users in the application', this.state.users);
 let theUsers = [].concat.apply([], this.state.users);
 console.log('theUsers', theUsers);
 
-for(let user of theUsers){
+for(let user of this.state.users){
   console.log('this is one of the users', user);
   if(user._id !== userObj._id){
     let notification = {};

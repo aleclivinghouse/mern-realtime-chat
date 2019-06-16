@@ -73,7 +73,7 @@ var getUsers = function(room, userId, socket, callback){
 	// So, users array will hold users' objects instead of ids.
 	var loadedUsers = 0;
 	users.forEach(function(userId, i){
-		User.find({id: userId}, function(err, user){
+		User.find({_id: userId}, function(err, user){
 			if (err) { return callback(err); }
 			users[i] = user;
 

@@ -90,7 +90,7 @@ exports = module.exports = function(io) {
 
 						Room.getUsers(newRoom, userId, socket, function(err, users, cuntUserInRoom){
 							if(err) throw err;
-
+              console.log('these are the users in the Room', users);
 							// Return list of all user connected to the room to the current user
 							socket.emit('updateUsersList', users, true);
 

@@ -3,7 +3,7 @@ import {DELETE_ROOM, GET_CURRENT_ROOM} from './types';
 
 export const deleteRoom = roomId => dispatch=>{
   console.log('this is the room id in the action', roomId);
-  axios.delete(`/api/chat/delete/${roomId}`)
+  axios.delete(`http://localhost:5002/api/chat/delete/${roomId}`)
   .then(res => dispatch({type: DELETE_ROOM, payload: res.data}))
 }
 
