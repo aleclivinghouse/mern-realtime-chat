@@ -24,11 +24,11 @@ class ChatRoom extends Component {
     }
     this.onChange = this.onChange.bind(this);
       this.onSubmit = this.onSubmit.bind(this);
-      this.initSocket();
       this.state.id = this.props.match.params.id;
   }
 
   componentWillMount(){
+    this.initSocket();
     axios.get(`http://localhost:5002/api/chat/messages/${this.state.id}`)
       .then((res)=>{
          console.log('these is the response with users', res);

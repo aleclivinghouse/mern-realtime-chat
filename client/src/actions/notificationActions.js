@@ -16,3 +16,9 @@ export const getNotifications = userId => dispatch => {
   axios.get(`http://localhost:5002/api/chat/getNotifications/${userId}`)
   .then(res => dispatch({type: GET_NOTIFICATIONS, payload: res.data}))
 }
+
+// export const clearNotifications = () => dispaatch => {
+//   return (dispatch) => {
+//     dispatch({type: CLEAR_NOTIFICATIONS, payload: nu})
+//   }
+// }

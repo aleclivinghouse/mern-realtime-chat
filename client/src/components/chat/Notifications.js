@@ -14,10 +14,10 @@ class Notifications extends Component {
       notifications:[],
       socket:null
     }
-    this.initSocket();
   }
 
   initSocket = () =>{
+    console.log('socket inited');
     const { user } = this.props.auth;
     const socket = io('http://127.0.0.1:5002', {
     transports: ['websocket'], jsonp: false });
@@ -26,19 +26,17 @@ class Notifications extends Component {
       this.setState({socket: socket});
       this.state.socket.emit('joinYourNotificationRoom', user.id);
       this.state.socket.on('addNotification', (notification)=>{
-        console.log('add notification fired');
-        // if(notification.text.includes(user.name)===false){
-        console.log('this is the notification received', notification);
         this.props.notificationToServer(notification, ()=> {
           console.log('callback fired');
+          //clear notifications
           this.props.getNotifications(user.id);
         });
-       // }
       });
     })
   }
 
   componentWillMount(){
+    this.initSocket();
     const { user } = this.props.auth;
     this.props.getNotifications(user.id);
   }

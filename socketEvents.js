@@ -46,7 +46,7 @@ exports = module.exports = function(io) {
       Room.findOne({'title':  recipientId}, function(err, room){
         if(err) throw err;
         console.log('this is the notification room found', room.id);
-        socket.to(room.id).emit('addNotification', notification);
+        socket.broadcast.to(room.id).emit('addNotification', notification);
       });
       // socket.join(theRoom.id);
     });
