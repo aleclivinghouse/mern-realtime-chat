@@ -8,7 +8,7 @@ const  Message = require('../../models/Message');
 const  Notification = require('../../models/Notification');
 
 router.get('/rooms', (req, res)=>{
-  Room.find()
+  Room.find({forNotify: false})
   .then(rooms => res.json(rooms))
   .catch(err => console.log(err));
 });
