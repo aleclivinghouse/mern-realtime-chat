@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
@@ -28,7 +29,10 @@ class Notifications extends Component {
         console.log('add notification fired');
         // if(notification.text.includes(user.name)===false){
         console.log('this is the notification received', notification);
-        this.props.notificationToServer(notification);
+        this.props.notificationToServer(notification, ()=> {
+          console.log('callback fired');
+          this.props.getNotifications(user.id);
+        });
        // }
       });
     })
@@ -41,7 +45,7 @@ class Notifications extends Component {
 
 
   render() {
-    console.log('these are the notifications', this.props);
+    console.log('these are the notifications', this.props.notification);
     let notifications = this.props.notifications.map((notification)=>
       <NotificationContainer notification={notification} />
 

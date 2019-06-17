@@ -6,9 +6,10 @@ export const deleteNotification = id => dispatch => {
   .then(res => dispatch({type: DELETE_NOTIFICATION, payload: id}))
 }
 
-export const notificationToServer = notification => dispatch => {
+export const notificationToServer = (notification, cb) => dispatch => {
   axios.post(`http://localhost:5002/api/chat/sendNotification`, notification)
-  .then(res => dispatch({type: SEND_NOTIFICATION, payload: res.data}))
+  .then(res =>cb())
+  .catch(err => console.log(err));
 }
 
 export const getNotifications = userId => dispatch => {
