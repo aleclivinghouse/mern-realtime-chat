@@ -9,11 +9,11 @@ const  Notification = require('../../models/Notification');
 
 router.get('/rooms', (req, res)=>{
   Room.find()
-  .then(posts => res.json(posts))
+  .then(rooms => res.json(rooms))
   .catch(err => console.log(err));
 });
 
-
+//{title: {$regex: "(?i)^(?!.*[a-z])[a-z0-9]{8,20}$"}}
 router.get('/messages/:id', (req, res)=>{
   console.log('message firing here')
   console.log(req.params.id);
