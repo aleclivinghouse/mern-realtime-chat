@@ -12,6 +12,7 @@ var RoomSchema = new Schema({
       ref: 'user'
     },
     title: { type: String, required: true },
+    forNotify: { type: Boolean, required: false },
     connections: { type: [{ userId: String, socketId: String }]},
     users: [{ type: Schema.ObjectId, ref: 'user' }]
 });

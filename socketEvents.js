@@ -15,7 +15,8 @@ exports = module.exports = function(io) {
 				} else {
 					Room.create({
 						title: title,
-            admin:userId
+            admin:userId,
+            forNotify: false
 					}, function(err, newRoom){
 						if(err) throw err;
 						socket.broadcast.emit('updateRoomsList', newRoom);
@@ -27,7 +28,12 @@ exports = module.exports = function(io) {
 
 
     socket.on('deleteRoom', function(roomId) {
-          RoomModel.findByIdAndRemove(roomId);
+      console.log('it is getting to deleteRoom', roomId);
+          RoomModel.findOne({_id: roomId})
+          .then((room) => {
+            room.remove().then(()=>res.json({success:true}))
+          })
+          .catch(err => console.log('notification delete error', err));
           socket.emit('removeRoom', roomId);
       });
 
