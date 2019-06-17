@@ -37,7 +37,7 @@ exports = module.exports = function(io) {
       // As the new message will be added manually in 'main.js' file
       // socket.emit('addMessage', message);
 
-      socket.broadcast.to(roomId).emit('addMessage', message);
+      socket.to(roomId).emit('addMessage', message);
     });
 
     socket.on('sendNotification', function(recipientId, notification) {

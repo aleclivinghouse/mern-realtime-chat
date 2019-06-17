@@ -91,7 +91,7 @@ console.log('theUsers', theUsers);
 
 for(let user of theUsers){
   console.log('this is one of the users', user);
-  if(user._id !== userObj._id){
+  if(user._id !== this.props.auth.user.id){
     let notification = {};
     let notificationText = user.name + " sent a message in room " + this.props.currentRoom.title;
     notification.recipient = user._id;
