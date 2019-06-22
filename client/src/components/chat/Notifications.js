@@ -30,13 +30,14 @@ class Notifications extends Component {
       this.state.socket.emit('joinYourNotificationRoom', user.id);
 
       this.state.socket.on('addNotification', (notification)=>{
-        this.startTimer();
-        if(this.state.time < 1){
+
+        // if(this.state.time === 0){
         this.props.notificationToServer(notification, ()=> {
           this.props.getNotifications(user.id);
+          // this.startTimer();
         });
-        }
-        this.resetTimer();
+        // this.resetTimer();
+        // }
       });
     })
   }
