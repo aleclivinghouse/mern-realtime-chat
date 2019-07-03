@@ -52,8 +52,6 @@ exports = module.exports = function(io) {
       Room.findOne({'title':  recipientId}, function(err, room){
         if(err) throw err;
         console.log('this is the notification room found', room.id);
-        // room = room.connections.filter(connection => connection.userId === recipientId)
-         console.log('this is the room ', room);
         socket.broadcast.to(room.id).emit('addNotification', notification);
       });
       // socket.join(theRoom.id);
@@ -65,16 +63,7 @@ exports = module.exports = function(io) {
       	if(err) throw 'thisd is the error to join your notifiaction room' + err;
         if(room){
           console.log('about to join a your notification room ');
-          //get all the user ids from the room
-          let flag = false;
-          for(connection of room.connections){
-            if(connection.userId === userId){
-               flag = true;
-            }
-          }
-        if(flag === false){
-          socket.join(room.id);
-        }
+        socket.join(room.id);
       }else{
         Room.create({
           title: userId
