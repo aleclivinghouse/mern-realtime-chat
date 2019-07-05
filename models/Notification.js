@@ -10,6 +10,10 @@ const NotificationSchema = new Schema({
     type: String,
     required: true
   },
+  tag:{
+    type: String,
+    required: false
+  }
 });
 
 module.exports = Notification = mongoose.model('notifications', NotificationSchema);

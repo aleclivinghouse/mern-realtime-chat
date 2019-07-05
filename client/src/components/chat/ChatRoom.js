@@ -96,6 +96,8 @@ for(let user of theUsers){
     let notificationText = user.name + " sent a message in room " + this.props.currentRoom.title;
     notification.recipient = user._id;
     notification.text = notificationText;
+    notification.tag = Math.random().toString(36).substring(7);
+    console.log('this is the notification tag', notification.tag);
     console.log('join notification about to be submitted', user._id);
     this.state.socket.emit('sendNotification', user._id, notification);
   }
