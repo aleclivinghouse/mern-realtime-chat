@@ -42,6 +42,7 @@ router.delete('delete/:roomId', (req, res)=>{
 });
 
 router.post('/sendNotification', (req, res)=> {
+  console.log('you are the oneeeee')
   const newNotification = new Notification({
     recipient: req.body.recipient,
     text: req.body.text

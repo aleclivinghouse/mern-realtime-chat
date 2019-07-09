@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  console.log('this is the notification in the reducer', action);
+  console.log('notification in the reducer', action.type, 'payloaddd', action.payload);
   switch (action.type) {
     case DELETE_NOTIFICATION:
       return {
@@ -18,6 +18,8 @@ export default function(state = initialState, action) {
           notifications: action.payload
         }
       case SEND_NOTIFICATION:
+      console.log('existing notifs', state.notifications)
+      console.log('new notifs', action.payload)
         return{
           ...state,
            notifications: [action.payload, ...state.notifications]

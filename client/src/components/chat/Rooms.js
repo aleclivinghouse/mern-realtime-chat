@@ -19,7 +19,6 @@ class Rooms extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit=this.onSubmit.bind(this);
-    this.initSocket();
   }
 
   initSocket = () => {
@@ -29,8 +28,8 @@ class Rooms extends Component {
   socket.connect();
   socket.on('connect', () => {
     console.log('the socket is connected');
-    this.setState({socket: socket});
-    this.state.socket.on('updateRoomsList', (room) => {
+    this.socket = socket;
+    this.socket.on('updateRoomsList', (room) => {
       console.log('update rooms lists fired ');
        this.setState({rooms: [...this.state.rooms, room]}, ()=> {
        })
@@ -39,7 +38,9 @@ class Rooms extends Component {
   }
 
   componentDidMount(){
+    this.initSocket();
     const { user } = this.props.auth;
+
     axios.get('/api/chat/rooms')
       .then((res)=>{
         console.log('these are the rooms', res);
@@ -48,6 +49,7 @@ class Rooms extends Component {
         console.log(err);
       })
       console.log('this should be the user', user.id);
+
   }
 
 
@@ -56,7 +58,7 @@ class Rooms extends Component {
   onSubmit(e) {
     const { user } = this.props.auth;
    e.preventDefault();
-       this.state.socket.emit('createRoom', this.state.roomTitle, user.id);
+       this.socket.emit('createRoom', this.state.roomTitle, user.id);
        // this.setState({rooms: [...this.state.rooms, ]})
    }
 
@@ -68,9 +70,9 @@ class Rooms extends Component {
 onDeleteClick(id){
   this.setState({filterId: id});
   console.log('delete button fired', id);
-  this.state.socket.emit('deleteRoom', id);
+  this.socket.emit('deleteRoom', id);
 
-  this.state.socket.on('removeRoom', (roomId)=> {
+  this.socket.on('removeRoom', (roomId)=> {
     this.setState({rooms: [...this.state.rooms.filter(room => room._id!==roomId) ]})
   });
   this.setState({rooms: [...this.state.rooms.filter(room => room._id!==id) ]})
@@ -109,14 +111,14 @@ onDeleteClick(id){
     }));
 
     return (
-      <div class="row">
+      <div className="row">
         <Notifications />
-    <div class="input-field col s6 offset-m2">
+    <div className="input-field col s6 offset-m2">
        <form onSubmit={this.onSubmit}>
        <label className="active" for="roomTitle">New Room</label>
-      <input value={this.state.roomTitle} name="roomTitle" id="roomTitle" type="text" onChange={this.onChange} lassName="roomTitle" />
-        <button class="btn grey darken-1" input="submit" name="submit" value="submit">Submit
-        <i class="material-icons right">send</i>
+      <input value={this.state.roomTitle} name="roomTitle" id="roomTitle" type="text" onChange={this.onChange} className="roomTitle" />
+        <button className="btn grey darken-1" input="submit" name="submit" value="submit">Submit
+        <i className="material-icons right">send</i>
       </button>
       </form>
     </div>

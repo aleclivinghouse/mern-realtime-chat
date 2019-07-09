@@ -62,8 +62,25 @@ exports = module.exports = function(io) {
     Room.findOne({'title' :userId}, function(err, room){
       	if(err) throw 'thisd is the error to join your notifiaction room' + err;
         if(room){
+          //if use does not already belong to the room
+
           console.log('about to join a your notification room ');
-        socket.join(room.id);
+        Room.addUser(room, userId, socket, function (err, newRoom){
+            Room.getUsers(newRoom, userId, socket, function(err, users, cuntUserInRoom){
+              console.log('this is the new room users', newRoom);
+              socket.join(newRoom.id);
+              if(err) throw err;
+              console.log('these are the users in the Room', users);
+              // Return list of all user connected to the room to the current user
+              socket.emit('updateUsersList', users, true);
+
+              // Return the current user to other connecting sockets in the room
+              // ONLY if the user wasn't connected already to the current room
+              if(cuntUserInRoom === 1){
+                socket.broadcast.to(newRoom.id).emit('updateUsersList', users[users.length - 1]);
+              }
+            });
+        })
       }else{
         Room.create({
           title: userId

@@ -7,6 +7,7 @@ export const deleteNotification = id => dispatch => {
 }
 
 export const notificationToServer = (notification, cb) => dispatch => {
+  //console
   axios.post(`http://localhost:5002/api/chat/sendNotification`, notification)
   .then(res =>cb())
   .catch(err => console.log(err));

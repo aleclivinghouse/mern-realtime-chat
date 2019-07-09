@@ -26,31 +26,14 @@ class Notifications extends Component {
     transports: ['websocket'], jsonp: false });
     socket.connect();
     socket.on('connect', ()=>{
-      this.setState({socket: socket});
-      this.state.socket.emit('joinYourNotificationRoom', user.id);
+      this.socket = socket;
+      this.socket.emit('joinYourNotificationRoom', user.id);
 
-      this.state.socket.on('addNotification', (notification)=>{
-        let notifications = [];
-        let newArr = [];
-        notifications.push(notification);
-        let map = {};
-        for(notification of notifications){
-          if(!map[notification.tag]){
-            map[notification.tag] = 1;
-          } else {
-            map[notification.tag] = null;
-          }
-          if(map[notification.tag] !== null){
-            newArr.push(notification);
-          }
-        }
-        console.log('this is the tag', notification.tag);
-
-        for(let notification of newArr){
-        this.props.notificationToServer(notification, ()=> {
+      this.socket.on('addNotification', (notification)=>{
+        console.log('add notif', notification)
+        //this.props.notificationToServer(notification, ()=> {
           this.props.getNotifications(user.id);
-        });
-     }
+        //});
    });
   });
   }
@@ -67,7 +50,7 @@ class Notifications extends Component {
       console.log("reset")
     }
 
-  componentWillMount(){
+  componentDidMount(){
     this.initSocket();
     const { user } = this.props.auth;
     this.props.getNotifications(user.id);
@@ -75,9 +58,12 @@ class Notifications extends Component {
 
 
   render() {
-    console.log('these are the notifications', this.props.notification);
-    let notifications = this.props.notifications.map((notification)=>
-      <NotificationContainer notification={notification} />
+    console.log('these are the notifications', this.props.notifications);
+    let notifications = this.props.notifications.map((notification)=> {
+      //console.log('notiffssss', notification)
+      return <NotificationContainer notification={notification} />;
+    }
+
 
     );
     return (
