@@ -12,11 +12,8 @@ class Notifications extends Component {
     super(props);
     this.state = {
       notifications:[],
-      socket:null,
-      time: 0
+      socket:null
     };
-    this.startTimer = this.startTimer.bind(this)
-    this.resetTimer = this.resetTimer.bind(this)
   }
 
   initSocket = () =>{
@@ -30,24 +27,9 @@ class Notifications extends Component {
       this.socket.emit('joinYourNotificationRoom', user.id);
 
       this.socket.on('addNotification', (notification)=>{
-        console.log('add notif', notification)
-        //this.props.notificationToServer(notification, ()=> {
           this.props.getNotifications(user.id);
-        //});
-   });
-  });
-  }
-
-  startTimer() {
-      this.timer = setInterval(() => this.setState({
-        time: this.state.time + 1
-      }), 1000)
-      console.log("start")
-    }
-
-    resetTimer() {
-      this.setState({time: 0})
-      console.log("reset")
+        });
+     });
     }
 
   componentDidMount(){
