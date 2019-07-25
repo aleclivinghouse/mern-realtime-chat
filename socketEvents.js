@@ -66,7 +66,7 @@ exports = module.exports = function(io) {
 
           console.log('about to join a your notification room ');
         Room.addUser(room, userId, socket, function (err, newRoom){
-            Room.getUsers(newRoom, userId, socket, function(err, users, cuntUserInRoom){
+            Room.getUsers(newRoom, userId, socket, function(err, users, countUserInRoom){
               console.log('this is the new room users', newRoom);
               socket.join(newRoom.id);
               if(err) throw err;
@@ -76,7 +76,7 @@ exports = module.exports = function(io) {
 
               // Return the current user to other connecting sockets in the room
               // ONLY if the user wasn't connected already to the current room
-              if(cuntUserInRoom === 1){
+              if(countUserInRoom === 1){
                 socket.broadcast.to(newRoom.id).emit('updateUsersList', users[users.length - 1]);
               }
             });
@@ -111,7 +111,7 @@ exports = module.exports = function(io) {
 						// Join the room channel
 						socket.join(newRoom.id);
 
-						Room.getUsers(newRoom, userId, socket, function(err, users, cuntUserInRoom){
+						Room.getUsers(newRoom, userId, socket, function(err, users, countUserInRoom){
 							if(err) throw err;
               console.log('these are the users in the Room', users);
 							// Return list of all user connected to the room to the current user
@@ -119,7 +119,7 @@ exports = module.exports = function(io) {
 
 							// Return the current user to other connecting sockets in the room
 							// ONLY if the user wasn't connected already to the current room
-							if(cuntUserInRoom === 1){
+							if(countUserInRoom === 1){
 								socket.broadcast.to(newRoom.id).emit('updateUsersList', users[users.length - 1]);
 							}
 						});
@@ -136,7 +136,7 @@ exports = module.exports = function(io) {
 
 			// Find the room to which the socket is connected to,
 			// and remove the current user + socket from this room
-			Room.removeUser(socket, function(err, room, userId, cuntUserInRoom){
+			Room.removeUser(socket, function(err, room, userId, countUserInRoom){
 				if(err) throw err;
 
 				// Leave the room channel
@@ -144,7 +144,7 @@ exports = module.exports = function(io) {
 
 				// Return the user id ONLY if the user was connected to the current room using one socket
 				// The user id will be then used to remove the user from users list on chatroom page
-				if(cuntUserInRoom === 1){
+				if(countUserInRoom === 1){
 					socket.broadcast.to(room.id).emit('removeUser', userId);
 				}
 			});

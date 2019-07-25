@@ -51,14 +51,14 @@ var addUser = function(room, userId, socket, callback){
  */
 var getUsers = function(room, userId, socket, callback){
 
-	var users = [], vis = {}, cunt = 0;
+	var users = [], vis = {}, count = 0;
 
 	// Loop on room's connections, Then:
 	room.connections.forEach(function(conn){
 
 		// 1. Count the number of connections of the current user(using one or more sockets) to the passed room.
 		if(conn.userId === userId){
-			cunt++;
+			count++;
 		}
 
 		// 2. Create an array(i.e. users) contains unique users' ids
@@ -79,7 +79,7 @@ var getUsers = function(room, userId, socket, callback){
 
 			// fire callback when all users are loaded (async) from database
 			if(++loadedUsers === users.length){
-				return callback(null, users, cunt);
+				return callback(null, users, count);
 			}
 		});
 	});
@@ -98,13 +98,13 @@ var removeUser = function(socket, userId, callback){
 
 		// Loop on each room, Then:
 		rooms.every(function(room){
-			var pass = true, cunt = 0, target = 0;
+			var pass = true, count = 0, target = 0;
 
 			// For every room,
 			// 1. Count the number of connections of the current user(using one or more sockets).
 			room.connections.forEach(function(conn, i){
 				if(conn.userId === userId){
-					cunt++;
+					count++;
 				}
 				if(conn.socketId === socket.id){
 					pass = false, target = i;
@@ -117,7 +117,7 @@ var removeUser = function(socket, userId, callback){
 				room.connections.id(room.connections[target]._id).remove();
 				room.save(function(err){
 					if(callback){
-					callback(err, room, userId, cunt);
+					callback(err, room, userId, count);
 				  }
 				});
 			}
