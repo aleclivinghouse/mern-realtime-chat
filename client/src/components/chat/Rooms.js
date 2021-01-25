@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import {deleteRoom} from '../../actions';
 import Notifications from './Notifications';
 
-const socketURL="http://localhost:3000";
+const socketURL="/";
 class Rooms extends Component {
   constructor(props){
     super(props);

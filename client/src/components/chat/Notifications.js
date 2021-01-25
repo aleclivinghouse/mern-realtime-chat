@@ -6,7 +6,7 @@ import {notificationToServer, getNotifications} from '../../actions';
 import NotificationContainer from './NotificationContainer';
 import axios from 'axios';
 
-const socketURL="http://localhost:3000";
+const socketURL="/";
 class Notifications extends Component {
   constructor(props){
     super(props);

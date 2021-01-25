@@ -10,7 +10,7 @@ import Notifications from './Notifications';
 
 
 //5002
-const socketURL="http://localhost:3000";
+const socketURL="/";
 class ChatRoom extends Component {
   constructor(props){
     super(props);
@@ -29,7 +29,7 @@ class ChatRoom extends Component {
 
   async componentDidMount(){
     await this.initSocket();
-    axios.get(`http://localhost:5002/api/chat/messages/${this.roomId}`)
+    axios.get(`/api/chat/messages/${this.roomId}`)
       .then((res)=>{
          console.log('these is the response with users', res);
         this.setState({messages: res.data}, () => {
