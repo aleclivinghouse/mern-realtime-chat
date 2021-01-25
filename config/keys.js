@@ -1,4 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
 module.exports = {
-  mongoURI: "mongodb://user1:Voodoo12@ds131747.mlab.com:31747/chat-attempt",
-  secretOrKey: "secret"
+  mongoURI: process.env.mongoURI,
+  secretOrKey: process.env.secretOrKey
 };

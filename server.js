@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 socketEvents = require('./socketEvents');
 // DB Config
 const db = require("./config/keys").mongoURI;
+console.log("this is the db: ", db);
 
 // Connect to MongoDB
 mongoose
@@ -52,6 +53,13 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
 app.use("/api/chat", chat);
+
+app.use(express.static('client/build'))
+app.get('*', (req, res)=>{
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
+
+
 const PORT = process.env.PORT || 5002;
 const server = app.listen(PORT);
 const io = require('socket.io').listen(server);
