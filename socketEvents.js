@@ -31,7 +31,7 @@ exports = module.exports = function(io) {
       console.log('it is getting to deleteRoom', roomId);
           RoomModel.findOne({_id: roomId})
           .then((room) => {
-            room.remove().then(()=>res.json({success:true}))
+            room.remove().then(console.log("delete room worked"));
           })
           .catch(err => console.log('notification delete error', err));
           socket.emit('removeRoom', roomId);

@@ -14,7 +14,7 @@ export const notificationToServer = (notification, cb) => dispatch => {
 }
 
 export const getNotifications = userId => dispatch => {
-  axios.get(`http://localhost:5002/api/chat/getNotifications/${userId}`)
+  axios.get(`/api/chat/getNotifications/${userId}`)
   .then(res => dispatch({type: GET_NOTIFICATIONS, payload: res.data}))
 }
 
